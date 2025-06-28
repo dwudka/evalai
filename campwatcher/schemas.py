@@ -11,6 +11,7 @@ class WatcherCreate(BaseModel):
     tent_only: bool = Field(False, description="Only tent sites")
     no_rv: bool = Field(False, description="Exclude RV sites")
     loop: str | None = Field(None, description="Campground loop")
+
     check_time: str = Field(..., regex=r"^\d{2}:\d{2}$", description="Time in HH:MM")
     email: str | None = Field(None, description="Notification email")
 

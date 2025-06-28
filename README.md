@@ -98,10 +98,10 @@ python tui.py
 The interface lets you filter for weekend-only dates and highlights locations
 that are in high demand.
 
-### Simple Web Page
 
 Browse to `http://localhost:5000/` after starting the server for a basic form
 to search campgrounds with the new filters.
+
 ### Running Tests
 
 ```bash

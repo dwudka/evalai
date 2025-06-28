@@ -6,6 +6,7 @@ import datetime
 import logging
 from typing import Any, List
 
+
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from .api import check_availability
@@ -47,6 +48,7 @@ def send_email(to_addr: str | None, subject: str, body: str) -> None:
         logger.error("Failed to send email: %s", exc)
 
 
+
 def run_watcher(watcher_id: int) -> None:
     """Check availability for a stored watcher and log results."""
     session = SessionLocal()
@@ -77,6 +79,7 @@ def run_watcher(watcher_id: int) -> None:
                 "Campsite available",
                 f"Matching sites found: {filtered}",
             )
+
         else:
             logger.info("No availability for watcher %s", watcher.id)
     except Exception as exc:  # noqa: BLE001

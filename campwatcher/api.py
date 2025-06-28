@@ -24,6 +24,7 @@ def check_availability(
     campground_id: str, month_str: str, site_type: str | None = None
 ) -> List[Dict[str, Any]]:
     """Return available site IDs for a campground/month with attributes."""
+
     start_date = f"{month_str}-01T00:00:00.000Z"
     url = config.availability_api.format(campground_id=campground_id)
     resp = requests.get(url, params={"start_date": start_date})
@@ -44,4 +45,5 @@ def check_availability(
                     entry = {"site_id": site_id, "date": day}
                     entry.update(attrs)
                     available.append(entry)
+
     return available

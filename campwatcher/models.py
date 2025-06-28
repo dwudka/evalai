@@ -1,4 +1,5 @@
 from sqlalchemy import Boolean, Column, Integer, String, create_engine
+
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -20,6 +21,7 @@ class Watcher(Base):
     tent_only = Column(Boolean, default=False)
     no_rv = Column(Boolean, default=False)
     loop = Column(String, nullable=True)
+
     check_time = Column(String, nullable=False)  # HH:MM
     email = Column(String, nullable=True)
 

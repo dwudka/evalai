@@ -8,6 +8,7 @@ from logging.config import dictConfig
 from flask import Flask, jsonify, request, render_template
 from flask.typing import ResponseReturnValue
 
+
 from campwatcher import api
 from campwatcher.models import SessionLocal, Watcher
 from campwatcher.schemas import WatcherCreate
@@ -29,6 +30,7 @@ def create_app() -> Flask:
             "version": 1,
             "formatters": {"default": {"format": "%(asctime)s %(levelname)s %(name)s: %(message)s"}},
             "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "default"}},
+
             "root": {"level": "INFO", "handlers": ["console"]},
         }
     )
@@ -52,6 +54,7 @@ def create_app() -> Flask:
             filtered.append(camp)
         return jsonify(filtered)
 
+
     @app.route("/ca_availability")
     def ca_availability() -> ResponseReturnValue:
         park_id = request.args.get("park_id")
@@ -59,6 +62,7 @@ def create_app() -> Flask:
         start_date = request.args.get("start_date")
         if not park_id or not facility_id or not start_date:
             return jsonify({"error": "park_id, facility_id and start_date required"}), 400
+
         data = fetch_ca_availability(park_id, facility_id, start_date)
         return jsonify(data)
 
@@ -81,6 +85,7 @@ def create_app() -> Flask:
         score = difficulty_score(campground_id)
         return jsonify({"campground_id": campground_id, "difficulty_score": score})
 
+
     @app.route("/watchers", methods=["POST"])
     def add_watcher() -> ResponseReturnValue:
         model = WatcherCreate.model_validate(request.json)
@@ -91,6 +96,7 @@ def create_app() -> Flask:
             tent_only=bool(model.tent_only),
             no_rv=bool(model.no_rv),
             loop=model.loop,
+
             check_time=model.check_time,
             email=model.email,
         )
@@ -103,6 +109,7 @@ def create_app() -> Flask:
     @app.route("/")
     def index() -> ResponseReturnValue:
         return render_template("index.html")
+
 
     @app.before_first_request
     def start_scheduler() -> None:
