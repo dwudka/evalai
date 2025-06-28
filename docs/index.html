@@ -4,20 +4,65 @@
 <meta charset="UTF-8">
 <title>Campsite Finder</title>
 <style>
-body { font-family: Arial, sans-serif; padding: 2rem; }
-.container { max-width: 800px; margin: auto; }
-input[type=text] { width: 100%; padding: 0.5rem; margin: 0.5rem 0; }
-button { padding: 0.5rem 1rem; }
-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+}
+
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input[type=text],
+input[type=month] {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th,
+td {
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>Campsite Finder</h1>
-<input id="query" type="text" placeholder="Search">
-<button onclick="search()">Search</button>
-<table id="results"></table>
+  <h1>Campsite Finder</h1>
+  <input id="query" type="text" placeholder="Search campgrounds">
+  <input id="month" type="month">
+  <button onclick="search()">Search</button>
+  <table id="results"></table>
+  <div id="availability"></div>
 </div>
 <script>
 function search() {
@@ -27,10 +72,39 @@ function search() {
   fetch(url)
     .then(r => r.json())
     .then(data => {
-      const rows = (data.RECDATA || []).map(c => `<tr><td>${c.FacilityName}</td><td>${c.FacilityID}</td></tr>`).join('');
-      document.getElementById('results').innerHTML = '<tr><th>Name</th><th>ID</th></tr>' + rows;
+      const rows = (data.RECDATA || []).map(c =>
+        `<tr><td>${c.FacilityName}</td>` +
+        `<td>${c.FacilityID}</td>` +
+        `<td><button onclick="availability('${c.FacilityID}', this)">Check Availability</button></td></tr>`
+      ).join('');
+      document.getElementById('results').innerHTML = '<tr><th>Name</th><th>ID</th><th></th></tr>' + rows;
     })
     .catch(err => console.error(err));
+}
+
+function availability(id, btn) {
+  const monthInput = document.getElementById('month').value;
+  const month = monthInput ? monthInput : new Date().toISOString().slice(0,7);
+  const url = `https://www.recreation.gov/api/camps/availability/campground/${id}/month?start_date=${month}-01T00:00:00.000Z`;
+  const availDiv = document.getElementById('availability');
+  availDiv.textContent = 'Loading availability...';
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      const dates = [];
+      for (const site of Object.values(data.campsites || {})) {
+        for (const [day, status] of Object.entries(site.availabilities || {})) {
+          if (status === 'Available') dates.push(day);
+        }
+      }
+      availDiv.textContent = dates.length ?
+        `Available dates for ${id}: ` + dates.slice(0,5).join(', ') :
+        'No availability for this month.';
+    })
+    .catch(err => {
+      console.error(err);
+      availDiv.textContent = 'Error fetching availability.';
+    });
 }
 </script>
 </body>
