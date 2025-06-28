@@ -6,7 +6,10 @@ from campwatcher.config import config
 from ranking import difficulty_score
 
 
-def test_difficulty_score_returns_float(mocker):
-    mocker.patch("ranking._fetch_availability", return_value={"campsites": {}})
+def test_difficulty_score_returns_float(monkeypatch):
+    monkeypatch.setattr(
+        "ranking._fetch_availability",
+        lambda *args, **kwargs: {"campsites": {}},
+    )
     result = difficulty_score("100")
     assert isinstance(result, float)
