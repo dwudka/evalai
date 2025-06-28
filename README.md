@@ -4,12 +4,18 @@ This is a simple Flask web application that allows users to search for campsites
 
 ## Setup
 
+Set environment variables if needed:
+- `SEARCH_API`
+- `AVAILABILITY_API`
+- `DATABASE_URI`
+
+
 1. Install dependencies (use a virtual environment recommended):
    ```bash
    pip install -r requirements.txt
    ```
 
-2. Run the application:
+2. The SQLite database will be created on first run. Run the application:
    ```bash
    python app.py
    ```
@@ -80,3 +86,9 @@ python tui.py
 
 The interface lets you filter for weekend-only dates and highlights locations
 that are in high demand.
+
+### Running Tests
+
+```bash
+pytest
+```
