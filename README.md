@@ -69,3 +69,39 @@ print("Least available sites:", sites[:3])
 ```
 
 Higher difficulty scores indicate fewer available dates across all sites.
+
+## Running Locally
+
+Follow these steps to start the application on your machine.
+
+1. **Clone the repository** (if you have not already):
+
+   ```bash
+   git clone <repo-url>
+   cd evalai
+   ```
+
+2. **Create and activate a virtual environment** (recommended):
+
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. **Install dependencies**:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the Flask server**:
+
+   ```bash
+   python app.py
+   ```
+
+   The service will be available at `http://localhost:5000`.
+
+You can now make requests to the API endpoints described above. Watcher jobs
+will run at the configured times and log any newly available sites to the
+console.
