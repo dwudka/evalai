@@ -69,3 +69,14 @@ print("Least available sites:", sites[:3])
 ```
 
 Higher difficulty scores indicate fewer available dates across all sites.
+
+### Terminal Interface
+
+An interactive text UI is available for quick searches by ZIP code. Run it with:
+
+```bash
+python tui.py
+```
+
+The interface lets you filter for weekend-only dates and highlights locations
+that are in high demand.
