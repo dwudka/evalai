@@ -5,6 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import requests
 import datetime
+from reserve_ca import fetch_availability as fetch_ca_availability, fetch_update_time as fetch_ca_update_time
 
 # Database setup
 engine = create_engine('sqlite:///watchers.db')
@@ -84,6 +85,27 @@ def search_campgrounds():
     lon = request.args.get('lon')
     results = fetch_campgrounds(query, lat, lon)
     return jsonify(results)
+
+
+@app.route('/ca_availability')
+def ca_availability():
+    park_id = request.args.get('park_id')
+    facility_id = request.args.get('facility_id')
+    start_date = request.args.get('start_date')
+    if not park_id or not facility_id or not start_date:
+        return jsonify({'error': 'park_id, facility_id and start_date required'}), 400
+    data = fetch_ca_availability(park_id, facility_id, start_date)
+    return jsonify(data)
+
+
+@app.route('/ca_update_time')
+def ca_update_time():
+    park_id = request.args.get('park_id')
+    facility_id = request.args.get('facility_id')
+    if not park_id or not facility_id:
+        return jsonify({'error': 'park_id and facility_id required'}), 400
+    update_dt = fetch_ca_update_time(park_id, facility_id)
+    return jsonify({'next_update_time': update_dt.isoformat() if update_dt else None})
 
 
 @app.route('/watchers', methods=['POST'])
