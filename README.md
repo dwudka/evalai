@@ -102,7 +102,6 @@ that are in high demand.
 
 Browse to `http://localhost:5000/` after starting the server for a basic form
 to search campgrounds with the new filters.
-
 ### Running Tests
 
 ```bash
