@@ -102,6 +102,23 @@ that are in high demand.
 Browse to `http://localhost:5000/` after starting the server for a basic form
 to search campgrounds with the new filters.
 
+### Streamlit Interface
+
+A lightweight Streamlit app provides an alternative UI. Launch it with:
+
+```bash
+streamlit run streamlit_app.py
+```
+
+It queries Recreation.gov directly and displays difficulty scores alongside
+search results.
+
+### GitHub Pages
+
+A static search page lives in the `docs/` directory. When this repository is
+served on GitHub Pages it offers a simple client-side experience using the
+public Recreation.gov API.
+
 ### Running Tests
 
 ```bash

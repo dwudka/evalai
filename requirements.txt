@@ -5,3 +5,4 @@ SQLAlchemy==2.0.19
 beautifulsoup4==4.12.3
 pydantic==2.7.1
 pytest==7.4.4
+streamlit==1.32.2

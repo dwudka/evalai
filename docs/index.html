@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Campsite Finder</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 2rem; }
+.container { max-width: 800px; margin: auto; }
+input[type=text] { width: 100%; padding: 0.5rem; margin: 0.5rem 0; }
+button { padding: 0.5rem 1rem; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Campsite Finder</h1>
+<input id="query" type="text" placeholder="Search">
+<button onclick="search()">Search</button>
+<table id="results"></table>
+</div>
+<script>
+function search() {
+  const q = document.getElementById('query').value;
+  if (!q) return;
+  const url = 'https://www.recreation.gov/api/facilities?query=' + encodeURIComponent(q);
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      const rows = (data.RECDATA || []).map(c => `<tr><td>${c.FacilityName}</td><td>${c.FacilityID}</td></tr>`).join('');
+      document.getElementById('results').innerHTML = '<tr><th>Name</th><th>ID</th></tr>' + rows;
+    })
+    .catch(err => console.error(err));
+}
+</script>
+</body>
+</html>
