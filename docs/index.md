@@ -80,7 +80,3 @@ python tui.py
 
 The interface lets you filter for weekend-only dates and highlights locations
 that are in high demand.
-
-## GitHub Pages
-
-Documentation is built with MkDocs. The generated site can be automatically deployed using GitHub Pages.

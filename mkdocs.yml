@@ -1,0 +1,4 @@
+docs_dir: docs
+site_name: Campsite Availability Watcher
+nav:
+  - Home: index.md
