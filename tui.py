@@ -6,12 +6,14 @@ from typing import List, Tuple
 # Simple mapping of ZIP codes to coordinates for demo purposes
 ZIP_COORDS = {
     "94102": (37.7793, -122.4193),  # San Francisco
-    "10001": (40.7506, -73.9971),   # New York
-    "30301": (33.7525, -84.3915),   # Atlanta
+    "10001": (40.7506, -73.9971),  # New York
+    "30301": (33.7525, -84.3915),  # Atlanta
 }
 
 SEARCH_API = "https://www.recreation.gov/api/facilities"
-AVAILABILITY_API = "https://www.recreation.gov/api/camps/availability/campground/{campground_id}/month"
+AVAILABILITY_API = (
+    "https://www.recreation.gov/api/camps/availability/campground/{campground_id}/month"
+)
 
 
 def fetch_campgrounds(lat: float, lon: float) -> List[dict]:
