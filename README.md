@@ -115,9 +115,9 @@ search results.
 
 ### GitHub Pages
 
-A static search page lives in the `docs/` directory. When this repository is
-served on GitHub Pages it offers a simple client-side experience using the
-public Recreation.gov API.
+The `docs/` directory contains a lightweight page that can be hosted on
+GitHub Pages. It now fetches live campsite availability from the public
+Recreation.gov API so you can check open dates directly in the browser.
 
 ### Running Tests
 
