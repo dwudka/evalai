@@ -45,14 +45,27 @@ When availability is found, a message is printed to the console. This can be ext
 
 ### ReserveCalifornia Endpoints
 
-Two additional endpoints allow checking campsite information for California
-State Parks using ReserveCalifornia.
+Two additional endpoints allow checking campsite information for California State Parks using ReserveCalifornia.
 
 ```bash
 GET /ca_availability?park_id=<park>&facility_id=<facility>&start_date=YYYY-MM-DD
 GET /ca_update_time?park_id=<park>&facility_id=<facility>
 ```
 
-`/ca_availability` returns the raw availability JSON from the ReserveCalifornia
-API. `/ca_update_time` scrapes the park page to find the timestamp of the next
-scheduled availability update, if available.
+`/ca_availability` returns the raw availability JSON from the ReserveCalifornia API. `/ca_update_time` scrapes the park page to find the timestamp of the next scheduled availability update, if available.
+
+### Ranking Booking Difficulty
+
+The `ranking.py` module provides helper functions to estimate how difficult it is to book a campground and to order individual sites by scarcity. Example usage:
+
+```python
+from ranking import difficulty_score, rank_sites_for_campground
+
+score = difficulty_score("232450")
+print("Difficulty score:", score)
+
+sites = rank_sites_for_campground("232450")
+print("Least available sites:", sites[:3])
+```
+
+Higher difficulty scores indicate fewer available dates across all sites.
